@@ -1,7 +1,7 @@
 function calculateTotalWeight(data) {
   const totals = [];
 
-  data.forEach((workout) => {
+  data.workout.forEach((workout) => {
     const workoutTotal = workout.exercises.reduce((total, { type, weight }) => {
       if (type === 'resistance') {
         return total + weight;
@@ -16,13 +16,15 @@ function calculateTotalWeight(data) {
 }
 
 function populateChart(data) {
-  const durations = data.map(({ totalDuration }) => totalDuration);
+  console.log(data)
+  const durations = data.duration.map(({ totalDuration }) => totalDuration);
+  console.log(durations)
   const pounds = calculateTotalWeight(data);
 
   const line = document.querySelector('#canvas').getContext('2d');
   const bar = document.querySelector('#canvas2').getContext('2d');
 
-  const labels = data.map(({ day }) => {
+  const labels = data.workout.map(({ day }) => {
     const date = new Date(day);
 
     // Use JavaScript's `Intl` object to help format dates

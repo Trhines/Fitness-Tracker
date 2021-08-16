@@ -43,8 +43,17 @@ module.exports = (app) => {
 
     app.get('/api/workouts/range', async (req, res)=>{
         try{
-            const workouts = await db.Workout.find({})
-            res.status(200).json(workouts)
+            const workout = await db.Workout.find({})
+
+            const duration = await db.Workout.aggregate([
+                {$match: {}},
+                {$unwind: "$exercises"},
+                {$group: {_id: "$day", totalDuration: {$sum: "$exercises.duration"}} }
+            ])
+
+            console.log({workout, duration})
+            // console.log(workouts[0].exercises[0])
+            res.status(200).json({workout, duration})
         }catch(err){
             res.status(500).json(err)
         }
