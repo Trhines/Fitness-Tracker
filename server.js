@@ -16,6 +16,11 @@ app.use(express.static("public"))
 require('./routes/homeRoutes')(app);
 require('./routes/apiRoutes')(app);
 
-mongoose.connect(process.env.MONGOD_URI || "mongodb://localhost/workout", { useNewUrlParser: true })
+mongoose.connect(process.env.MONGOD_URI || "mongodb://localhost/workout", { 
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+})
 
 app.listen(PORT, () => console.log(`now listening on port ${PORT}`))
