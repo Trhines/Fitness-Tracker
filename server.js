@@ -12,15 +12,19 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 app.use(express.static("public"))
+app.use(express.static("public"))
 
 require('./routes/homeRoutes')(app);
 require('./routes/apiRoutes')(app);
 
-mongoose.connect(process.env.MONGOD_URI || "mongodb://localhost/workout", { 
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false
-})
+mongoose.connect(
+    process.env.MONGODB_URI || 'mongodb://localhost/workout',
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false
+    }
+  );
 
 app.listen(PORT, () => console.log(`now listening on port ${PORT}`))
